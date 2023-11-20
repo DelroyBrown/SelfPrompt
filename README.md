@@ -27,7 +27,7 @@ Welcome to the Art Generator App! This is a creative platform where you can gene
 
 ## Feedback and Support
 
-We love to hear from our users! If you have any feedback, suggestions, or need support, please reach out to us at [support@email.com].
+We love to hear from our users! If you have any feedback, suggestions, or need support, please reach out to us at [delroybrown.db@gmail.com].
 
 Enjoy creating with Art Generator App!
 
