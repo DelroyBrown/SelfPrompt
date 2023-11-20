@@ -1,0 +1,47 @@
+{% extends "base.html" %} {% block content %}
+<form action="{% url 'home' %}" method="post">
+  {% csrf_token %}
+  <input type="text" name="prompt" placeholder="Enter your prompt" required />
+
+  <select name="aspect_ratio">
+    <option value="1:1">1:1</option>
+    <option value="16:9">16:9</option>
+    <!-- Add other aspect ratios as needed -->
+  </select>
+
+  <select name="style_id">
+    <option value="63">Style 63</option>
+    <option value="27">Style 27</option>
+    <!-- Add other style IDs as needed -->
+  </select>
+
+  <select name="high_res_results">
+    <option value="1">High Resolution</option>
+    <option value="0">Standard Resolution</option>
+  </select>
+
+  <button type="submit">Generate Image</button>
+</form>
+<div id="image-container"></div>
+<script>
+  document.querySelector("form").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var formData = new FormData(this);
+
+    fetch("{% url 'imagine_api' %}", {
+      method: "POST",
+      body: formData,
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.image_url) {
+          document.getElementById("image-container").innerHTML =
+            '<img src="' + data.image_url + '" alt="Generated Image">';
+        } else {
+          alert("Error generating image");
+        }
+      });
+  });
+</script>
+
+{% endblock content %}
