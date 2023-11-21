@@ -7,8 +7,8 @@
     <form id="artForm" action="{% url 'home' %}" method="post">
         {% csrf_token %}
 
-        <input type="text" name="full_name" placeholder="Please write your full name">
-        <input type="email" name="email" placeholder="Please write your email">
+        <input type="text" name="full_name" placeholder="Please write your full name" required>
+        <input type="email" name="email" placeholder="Please write your email" required>
         
       <div class="dropdown">
         <label for="aspectRatio">Aspect Ratio:</label>
