@@ -1,13 +1,14 @@
 {% extends "base.html" %} {% block content %}
 <div class="container">
   <header>
-    <h1>Art Generator</h1>
+    <h1>PromptAi Art Generator</h1>
   </header>
   <main>
     <form id="artForm" action="{% url 'home' %}" method="post">
         {% csrf_token %}
 
         <input type="text" name="full_name" placeholder="Please write your full name">
+        <input type="email" name="email" placeholder="Please write your email">
         
       <div class="dropdown">
         <label for="aspectRatio">Aspect Ratio:</label>

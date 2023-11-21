@@ -1,7 +1,10 @@
+import io
 import os
 import requests
 import logging
 import random
+from PIL import Image, ImageDraw, ImageFont
+from django.core.files.images import ImageFile
 from django.utils import timezone
 from django.core.mail import send_mail
 from django.conf import settings
@@ -22,13 +25,12 @@ def render_form(request):
 def home(request):
     url = "https://api.vyro.ai/v1/imagine/api/generations"
 
-    not_token = os.getenv('PROMPT_KEY')
-    headers = {
-        "Authorization": f"Bearer {not_token}"
-    }
+    not_token = os.getenv("PROMPT_KEY")
+    headers = {"Authorization": f"Bearer {not_token}"}
 
     # Get POST data
     full_name = request.POST.get("full_name")
+    email = request.POST.get("email")
     prompt_text = request.POST.get("prompt")
     style_id = request.POST.get("style_id")
     art_style = request.POST.get("art_style")
@@ -40,6 +42,7 @@ def home(request):
     seed = random.randint(1, 10000000)
     payload = {
         "full_name": (None, full_name),
+        "email": (None, email),
         "prompt": (None, prompt_text),
         "style_id": (None, combined_style),
         "aspect_ratio": (None, aspect_ratio),
@@ -53,6 +56,7 @@ def home(request):
     if response.status_code == 200:
         art_prompt = ArtPrompt(
             full_name=full_name,
+            email=email,
             prompt=prompt_text,
             style_id=style_id,
             art_style=art_style,
@@ -77,15 +81,34 @@ def home(request):
         return HttpResponse("API request failed", status=response.status_code)
 
 
+def add_logo_watermark(image, logo_path):
+    logo = Image.open(logo_path)
+    logo.thumbnail((650, 650))  # Adjust the size as needed
+
+    # Calculate the position to place the logo at the center of the image
+    image_width, image_height = image.size
+    logo_width, logo_height = logo.size
+
+    position = ((image_width - logo_width) // 2, (image_height - logo_height) // 2)
+
+    image.paste(logo, position, logo)
+    return image
+
+
 @require_http_methods(["POST"])
 def save_image(request):
     art_prompt_id = request.POST.get("art_prompt_id")
     frame_option = request.POST.get("frame_option", "unframed")
-    frame_size = request.POST.get("frame_size", "30x30")  # Default value if none provided
-
+    frame_size = request.POST.get(
+        "frame_size", "30x30"
+    )  # Default value if none provided
+    frame_color = request.POST.get("frame_color", "N/A")
     art_prompt = ArtPrompt.objects.get(id=art_prompt_id)
     art_prompt.frame_option = frame_option
-    art_prompt.frame_size = frame_size if frame_option != "unframed" else "Not applicable"
+    art_prompt.frame_size = (
+        frame_size if frame_option != "unframed" else "N/A"
+    )
+    art_prompt.frame_color = frame_color
     art_prompt.save()
 
     # Construct the image link
@@ -189,12 +212,31 @@ def save_image(request):
     model_name = MODEL_ID_CHOICES.get(art_prompt.style_id, "Unknown Style")
     art_style_name = ART_STYLE_CHOICES.get(art_prompt.art_style, "Unknown Art Style")
 
+    # Load the image and watermark
+    image_path = art_prompt.generated_image.path
+    logo_path = "static/images/logo.png"  # Adjust the path to your logo image
+    image = Image.open(image_path)
+
+    # Apply watermark
+    watermarked_image = add_logo_watermark(image, logo_path)
+
+    # Save the watermarked image to a BytesIO object
+    image_io = io.BytesIO()
+    watermarked_image.save(image_io, "PNG")
+    image_io.seek(0)
+
+    # Save the watermarked image in the ArtPrompt instance
+    art_prompt.watermarked_image.save(
+        f"watermarked_{art_prompt.generated_image.name}", ContentFile(image_io.read())
+    )
+
     # Format the submission date
     formatted_date = art_prompt.submission_date.strftime("%d/%m/%Y")
 
     # Construct the email message
     email_message = (
         f"Full Name: {art_prompt.full_name}\n"
+        f"Email: {art_prompt.email}\n"
         f"Prompt Text: {art_prompt.prompt}\n"
         f"Model: {model_name}\n"
         f"Style: {art_style_name}\n"
@@ -204,6 +246,7 @@ def save_image(request):
         f"Generated Image Link: {image_link}\n"
         f"Frame Option: {frame_option}\n"
         f"Frame/Image Size: {frame_size}\n"
+        f"Frame Colour: {art_prompt.frame_color}\n"
         f"Submission Date: {formatted_date}"
     )
 
@@ -216,4 +259,11 @@ def save_image(request):
         fail_silently=False,
     )
 
-    return HttpResponse("Image saved and email sent.")
+    watermarked_image_url = request.build_absolute_uri(art_prompt.watermarked_image.url)
+
+    context = {
+        "art_prompt": art_prompt,
+        "art_style_name": art_style_name,
+        "watermarked_image_url": watermarked_image_url,
+    }
+    return render(request, "prompt_summary.html", context)
