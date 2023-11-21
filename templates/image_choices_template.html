@@ -1,17 +1,32 @@
 {% extends "base.html" %}
 
-
 {% block content %}
+
 {% if image_generated %}
     <div>
-        <img src="{{ image_link }}" alt="Generated Art" style="max-width: 100%; height: auto;" />
+        <img src="{{ image_link }}" alt="Generated Art" style="max-width: 50%; height: auto;" />
     </div>
     <form action="{% url 'save_image' %}" method="post">
         {% csrf_token %}
         <input type="hidden" name="art_prompt_id" value="{{ art_prompt_id }}">
+    
+        <p>Choose framing option:</p>
+        <input type="radio" id="unframed" name="frame_option" value="unframed" checked>
+        <label for="unframed">Unframed</label><br>
+        <input type="radio" id="framed" name="frame_option" value="framed">
+        <label for="framed">Framed</label><br>
+
+        <p>Choose size:</p>
+        <input type="radio" id="30x30" name="frame_size" value="30x30">
+        <label for="30x30">30x30 cm</label><br>
+        <input type="radio" id="50x50" name="frame_size" value="50x50">
+        <label for="50x50">50x50 cm</label><br>
+        <input type="radio" id="70x70" name="frame_size" value="70x70">
+        <label for="70x70">70x70 cm</label><br>
+    
         <button type="submit">Save this Image</button>
     </form>
-    <a href="/">Try Again</a>
+    <a href="">Try Again</a>
 {% endif %}
 
 {% endblock content %}

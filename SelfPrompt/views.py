@@ -1,3 +1,4 @@
+import os
 import requests
 import logging
 import random
@@ -21,8 +22,9 @@ def render_form(request):
 def home(request):
     url = "https://api.vyro.ai/v1/imagine/api/generations"
 
+    not_token = os.getenv('PROMPT_KEY')
     headers = {
-        "Authorization": "Bearer vk-kagDFeSv2d7lPsITfj1OGoCFrOcrEbHQ3P6ImmZSCOz3Vu"
+        "Authorization": f"Bearer {not_token}"
     }
 
     # Get POST data
@@ -78,7 +80,13 @@ def home(request):
 @require_http_methods(["POST"])
 def save_image(request):
     art_prompt_id = request.POST.get("art_prompt_id")
+    frame_option = request.POST.get("frame_option", "unframed")
+    frame_size = request.POST.get("frame_size", "30x30")  # Default value if none provided
+
     art_prompt = ArtPrompt.objects.get(id=art_prompt_id)
+    art_prompt.frame_option = frame_option
+    art_prompt.frame_size = frame_size if frame_option != "unframed" else "Not applicable"
+    art_prompt.save()
 
     # Construct the image link
     image_link = request.build_absolute_uri(art_prompt.generated_image.url)
@@ -194,6 +202,8 @@ def save_image(request):
         f"High Resolution: {'Yes' if art_prompt.high_res else 'No'}\n"
         f"Seed: {art_prompt.seed}\n"
         f"Generated Image Link: {image_link}\n"
+        f"Frame Option: {frame_option}\n"
+        f"Frame/Image Size: {frame_size}\n"
         f"Submission Date: {formatted_date}"
     )
 

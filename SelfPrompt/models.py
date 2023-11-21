@@ -11,6 +11,7 @@ class ArtPrompt(models.Model):
     high_res = models.BooleanField(default=False)
     seed = models.CharField(max_length=50, default='', blank=True, null=True)
     generated_image = models.ImageField(upload_to="generated_images/")
+    frame_choice = models.CharField(max_length=100, blank=True, null=True)
     submission_date = models.DateField(auto_now_add=True)
 
     def __str__(self):

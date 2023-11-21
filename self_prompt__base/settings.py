@@ -54,7 +54,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "self_prompt__base.wsgi.application"
 
-IMAGINE_API_KEY = os.getenv('IMAGINE_API_KEY')
+PROMPT_KEY = os.getenv('PROMPT_KEY')
 
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
