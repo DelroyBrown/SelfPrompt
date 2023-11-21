@@ -34,7 +34,7 @@ Enjoy creating with Art Generator App!
 ---
 
 **Notes for Me:**
-- Replace `[support@email.com]` with your actual support or contact email.
+- Replace `[delroybrown.db@gmail.com]` with your actual support or contact email.
 - Adjust the instructions and feature descriptions based on the actual functionalities of your app.
 - You might want to include a section on privacy or data usage if your app stores user data or requires an internet connection.
 - If the app is hosted online, include the URL where users can access it.

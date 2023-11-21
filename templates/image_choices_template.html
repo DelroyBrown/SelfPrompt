@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+{% if image_generated %}
+    <div>
+        <img src="{{ image_link }}" alt="Generated Art" style="max-width: 100%; height: auto;" />
+    </div>
+    <form action="{% url 'save_image' %}" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="art_prompt_id" value="{{ art_prompt_id }}">
+        <button type="submit">Save this Image</button>
+    </form>
+    <a href="/">Try Again</a>
+{% endif %}
+
+{% endblock content %}
