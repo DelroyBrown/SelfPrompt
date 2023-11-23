@@ -1,0 +1,34 @@
+{% extends "base.html" %} {% load static %} {% block content %}
+
+<header class="summary_header">
+  <img
+    src="{% static 'images/prmptai_artgenerator.png' %}"
+    alt="PromptAi Digital Art Posters Art Generator"
+  />
+
+  <div>
+    <h2>Prompt Summary</h2>
+    <p>
+      Your name is {{ art_prompt.full_name }}, your email is
+      {{ art_prompt.email }}. Your prompt <em>"{{art_prompt.prompt}}"</em>, using the style
+      {{art_style_name}}, will be {{art_prompt.frame_option}} in {{art_prompt.frame_color}}.
+    </p>
+  </div>
+</header>
+<!-- <p><strong>Full Name:</strong> {{ art_prompt.full_name }}</p>
+<p><strong>Email:</strong> {{ art_prompt.email }}</p>
+<p><strong>Prompt Text:</strong> {{ art_prompt.prompt }}</p>
+<p><strong>Art Style:</strong> {{ art_style_name }}</p>
+<p><strong>Frame Option:</strong> {{ art_prompt.frame_option }}</p>
+<p><strong>Frame Colour:</strong> {{ art_prompt.frame_color }}</p>
+<p><strong>Frame Size:</strong> {{ art_prompt.frame_size }}</p> -->
+<!-- Include other details as needed -->
+<a href="{{ watermarked_image_url }}" download="WatermarkedImage.png"
+  >Download Watermarked Image</a
+>
+
+<p>
+  Your image has been sent off to be framed and will be with you shortly.
+  PromptAi will be in touch with a payment link and delivery time.
+</p>
+{% endblock %}

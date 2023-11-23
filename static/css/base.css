@@ -1,347 +1,315 @@
-@media screen and (max-width: 400px) {
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #f4f4f4;
-        color: #333;
-        margin: 0;
-        padding: 0;
-    }
-    
-    .container {
-        width: 80%;
-        margin: 0 auto;
-    }
-    
-    header {
-        text-align: center;
-        padding: 20px 0;
-    }
-    
-    main {
-        background-color: #fff;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-    
-    form {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 20px;
-        align-items: center;
-    }
-    
-    .dropdown {
-        display: flex;
-        flex-direction: column;
-    }
-    
-    .prompt-input {
-        grid-column: span 2;
-    }
-    
-    button {
-        grid-column: span 2;
-        padding: 10px;
-        background-color: #007bff;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-    }
-    
-    button:hover {
-        background-color: #0056b3;
-    }
-    
+body,
+html {
+    height: auto;
+    width: 100%;
 }
 
-@media screen and (min-width: 401px) and (max-width: 720px) {
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #f4f4f4;
-        color: #333;
-        margin: 0;
-        padding: 0;
-    }
-    
-    .container {
-        width: 80%;
-        margin: 0 auto;
-    }
-    
-    header {
-        text-align: center;
-        padding: 20px 0;
-    }
-    
-    main {
-        background-color: #fff;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-    
-    form {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 20px;
-        align-items: center;
-    }
-    
-    .dropdown {
-        display: flex;
-        flex-direction: column;
-    }
-    
-    .prompt-input {
-        grid-column: span 2;
-    }
-    
-    button {
-        grid-column: span 2;
-        padding: 10px;
-        background-color: #007bff;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-    }
-    
-    button:hover {
-        background-color: #0056b3;
-    }
-    
+#loadingIndicator {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column;
+    z-index: 1000;
 }
 
-@media screen and (min-width: 721px) and (max-width: 1280px) {
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #f4f4f4;
-        color: #333;
-        margin: 0;
-        padding: 0;
-    }
-    
-    .container {
-        width: 80%;
-        margin: 0 auto;
-    }
-    
-    header {
-        text-align: center;
-        padding: 20px 0;
-    }
-    
-    main {
-        background-color: #fff;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-    
-    form {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 20px;
-        align-items: center;
-    }
-    
-    .dropdown {
-        display: flex;
-        flex-direction: column;
-    }
-    
-    .prompt-input {
-        grid-column: span 2;
-    }
-    
-    button {
-        grid-column: span 2;
-        padding: 10px;
-        background-color: #007bff;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-    }
-    
-    button:hover {
-        background-color: #0056b3;
-    }
-    
+.hypnotic {
+    width: 110px;
+    height: 110px;
+    display: grid;
 }
 
-@media screen and (min-width: 1281px) and (max-width: 1440px) {
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #f4f4f4;
-        color: #333;
-        margin: 0;
-        padding: 0;
-    }
-    
-    .container {
-        width: 80%;
-        margin: 0 auto;
-    }
-    
-    header {
-        text-align: center;
-        padding: 20px 0;
-    }
-    
-    main {
-        background-color: #fff;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-    
-    form {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 20px;
-        align-items: center;
-    }
-    
-    .dropdown {
-        display: flex;
-        flex-direction: column;
-    }
-    
-    .prompt-input {
-        grid-column: span 2;
-    }
-    
-    button {
-        grid-column: span 2;
-        padding: 10px;
-        background-color: #007bff;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-    }
-    
-    button:hover {
-        background-color: #0056b3;
-    }
-    
+.hypnotic::before,
+.hypnotic::after {
+    content: "";
+    grid-area: 1/1;
+    border-radius: 50%;
+    background: repeating-conic-gradient(#0000, #000000 1deg 18deg, #0000 20deg 36deg);
+    -webkit-mask: repeating-radial-gradient(farthest-side, #000 0 10%, #0000 0 20%);
+    animation: hypnotic-5m0nuf 5.6s infinite linear;
 }
 
-@media screen and (min-width: 1441px) and (max-width: 1920px) {
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #f4f4f4;
-        color: #333;
-        margin: 0;
-        padding: 0;
-    }
-    
-    .container {
-        width: 80%;
-        margin: 0 auto;
-    }
-    
-    header {
-        text-align: center;
-        padding: 20px 0;
-    }
-    
-    main {
-        background-color: #fff;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-    
-    form {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 20px;
-        align-items: center;
-    }
-    
-    .dropdown {
-        display: flex;
-        flex-direction: column;
-    }
-    
-    .prompt-input {
-        grid-column: span 2;
-    }
-    
-    button {
-        grid-column: span 2;
-        padding: 10px;
-        background-color: #007bff;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-    }
-    
-    button:hover {
-        background-color: #0056b3;
-    }
-    
+.hypnotic::after {
+    -webkit-mask: repeating-radial-gradient(farthest-side, #0000 0 10%, #000 0 20%);
+    animation-direction: reverse;
 }
 
-@media screen and (min-width: 1921px) {
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #f4f4f4;
-        color: #333;
-        margin: 0;
-        padding: 0;
+@keyframes hypnotic-5m0nuf {
+    100% {
+        transform: rotate(.5turn);
     }
-    
-    .container {
-        width: 80%;
-        margin: 0 auto;
-    }
-    
-    header {
-        text-align: center;
-        padding: 20px 0;
-    }
-    
-    main {
-        background-color: #fff;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-    
-    form {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 20px;
-        align-items: center;
-    }
-    
-    .dropdown {
-        display: flex;
-        flex-direction: column;
-    }
-    
-    .prompt-input {
-        grid-column: span 2;
-    }
-    
-    button {
-        grid-column: span 2;
-        padding: 10px;
-        background-color: #007bff;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-    }
-    
-    button:hover {
-        background-color: #0056b3;
-    }
-    
 }
+
+
+/* PROMPT FORM */
+
+.prompt-form-container {
+    /* height: 100%; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-flow: column;
+}
+
+.prompt-form-container header {
+    width: 100%;
+    text-align: center;
+}
+
+.prompt-form-container img {
+    padding: 50px 0px;
+    height: 350px;
+}
+
+.prompt-form-container header div {
+    display: flex;
+    justify-content: center;
+}
+
+.prompt-form-container header div p {
+    font-size: 20px;
+    width: 50%;
+
+}
+
+.prompt-form-container main {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.prompt-form-container form {
+    width: 65%;
+    padding: 50px;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+}
+
+.form-name-email,
+.form-ar-res,
+.form-model-artstyle {
+    display: flex;
+    justify-content: space-around;
+
+}
+
+
+.full-name,
+.email,
+.prompt {
+    width: 35%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid black;
+    height: 45px;
+}
+
+
+
+.form-ar-res,
+.form-model-artstyle {
+    padding: 15px 0px;
+
+}
+
+.form-model-artstyle .dropdown {
+    width: 35%;
+
+}
+
+.form-ar-res .dropdown {
+    width: 35%;
+}
+
+#aspectRatio,
+#highResolution,
+#modalSelection,
+#artStyleSelection,
+.prompt {
+    width: 100%;
+    height: 45px;
+    border: none;
+    border: 1px solid black;
+    border-radius: 100px;
+    text-align: center;
+}
+
+.prompt {
+    border-radius: 5px;
+    width: 100%;
+}
+
+input[name=full_name],
+input[name=email],
+input[name=prompt] {
+    padding: 15px;
+    /* text-align: center; */
+}
+
+input[name=prompt] {
+    padding: 15px;
+    width: 88%;
+    /* height: 200px; */
+}
+
+
+.prompt-input {
+    display: flex;
+    justify-content: center;
+    flex-flow: column;
+    width: 100%;
+    padding: 15px;
+    align-items: center;
+}
+
+.form-submit-button {
+    width: 50%;
+    align-self: center;
+    background: transparent;
+    background: black;
+    border: none;
+    border-radius: 100px;
+    color: #fff;
+    text-transform: uppercase;
+    height: 50px;
+    transition: 0.3s;
+}
+
+.form-submit-button:hover,
+.gen-img_buttons span button:hover {
+    opacity: 0.7;
+}
+
+/* PROMPT FORM */
+
+/* GENERATED IMAGE PAGE */
+
+.gen-img_container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.gen-img_generated-image-wrap {
+    display: flex;
+    width: 50%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.imageHolder {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.gen-img_form {
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.gen-img_form p {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    text-align: center;
+    font-size: 20px;
+}
+
+.gen-img_form form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+}
+
+.gen-img_frame {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    height: 100px;
+    align-items: center;
+}
+
+.gen-img_frame span {
+    margin: 0px 10px;
+}
+
+.gen-img_image_size {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.gen-img_image_size span,
+.gen-img_frame-color span,
+.gen-img_buttons span {
+    padding: 10px 0px;
+}
+
+.gen-img_frame-color {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.gen-img_buttons {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.gen-img_buttons span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+}
+
+.gen-img_buttons span button {
+    padding: 10px 0px;
+    background: transparent;
+    border: none;
+    border: 1px solid black;
+    border-radius: 100px;
+    width: 50%;
+    background-color: black;
+    color: white;
+    transition: 0.3s;
+}
+
+/* GENERATED IMAGE PAGE */
+
+
+/* SUMMARY PAGE */
+
+.summary_header {
+    border: 1px solid red;
+}
+
+.summary_header img {
+    padding: 50px 0px;
+    height: 350px;
+}
+
+/* SUMMARY PAGE */

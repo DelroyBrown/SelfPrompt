@@ -1,38 +1,67 @@
-{% extends "base.html" %} {% block content %}
-<div class="container">
+{% extends "base.html" %} {% load static %} {% block content %}
+<div class="prompt-form-container">
   <header>
-    <h1>PromptAi Art Generator</h1>
+    <img
+      src="{% static 'images/prmptai_artgenerator.png' %}"
+      alt="PromptAi Digital Art Posters Art Generator"
+    />
+
+    <div>
+      <p>
+        Unleash your creativity with our AI Art Generator! Choose a style, give
+        a prompt, and let AI transform it into unique, personalized art in
+        seconds. It's fun, simple, and magical
+      </p>
+    </div>
   </header>
+
   <main>
     <form id="artForm" action="{% url 'home' %}" method="post">
-        {% csrf_token %}
+      {% csrf_token %}
 
-        <input type="text" name="full_name" placeholder="Please write your full name" required>
-        <input type="email" name="email" placeholder="Please write your email" required>
-        
-      <div class="dropdown">
-        <label for="aspectRatio">Aspect Ratio:</label>
-        <select id="aspectRatio" name="aspect_ratio">
-          <option value="1:1">1:1</option>
-          <option value="3:2">3:2</option>
-          <option value="4:3">4:3</option>
-          <option value="3:4">3:4</option>
-          <option value="16:9">16:9</option>
-          <option value="9:16">9:16</option>
-        </select>
-      </div>
-     
-      <div class="dropdown">
-        <label for="highResolution">Resolution:</label>
-        <select id="highResolution" name="high_res_results">
-          <option value="1">High Resolution</option>
-          <option value="0">Standard Resolution</option>
-        </select>     
+      <div class="form-name-email">
+        <input
+          class="full-name"
+          type="text"
+          name="full_name"
+          placeholder="What's your full name?"
+          required
+        />
+        <input
+          class="email"
+          type="email"
+          name="email"
+          placeholder="...and your email?"
+          required
+        />
       </div>
 
-      <div class="dropdown">
-        <label for="artStyleSelection">Model:</label>
-        <select name="style_id">
+      <div class="form-ar-res">
+        <div class="dropdown">
+          <select id="aspectRatio" name="aspect_ratio">
+            <option>Aspect Ratio</option>
+            <option value="1:1">1:1</option>
+            <option value="3:2">3:2</option>
+            <option value="4:3">4:3</option>
+            <option value="3:4">3:4</option>
+            <option value="16:9">16:9</option>
+            <option value="9:16">9:16</option>
+          </select>
+        </div>
+
+        <div class="dropdown">
+          <select id="highResolution" name="high_res_results">
+            <option>Resolution</option>
+            <option value="1">High Resolution</option>
+            <option value="0">Standard Resolution</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-model-artstyle">
+        <div class="dropdown">
+          <select id="modalSelection" name="style_id">
+            <option>Model</option>
             <option value="33">PromptAi V5</option>
             <option value="34">Anime V5</option>
             <option value="32">PromptAi V4.1</option>
@@ -44,106 +73,122 @@
             <option value="21">Anime</option>
             <option value="26">Portrait</option>
             <option value="122">SDXL 1.0</option>
-        </select>        
-      </div>
+          </select>
+        </div>
 
-      <div class="dropdown">
-        <label for="artStyleSelection">Art Style:</label>
-        <select id="artStyleSelection" name="art_style">
-          <option value="63">Sticker</option>
-          <option value="89">Fantasy</option>
-          <option value="55">Render</option>
-          <option value="78">Vibrant</option>
-          <option value="91">Woolitize</option>
-          <option value="12">Studio Ghibli</option>
-          <option value="74">Van Gogh</option>
-          <option value="82">Polaroid</option>
-          <option value="40">Rococco</option>
-          <option value="56">Coloring Book</option>
-          <option value="48">Samurai</option>
-          <option value="8">Minecraft</option>
-          <option value="49">Aquatic</option>
-          <option value="44">Firebender</option>
-          <option value="33">Neo fauvism</option>
-          <option value="52">Illustration</option>
-          <option value="7">Marble</option>
-          <option value="57">PaperCut Style</option>
-          <option value="88">Rennaisance</option>
-          <option value="11">GTA</option>
-          <option value="15">Product Photography</option>
-          <option value="32">Clip Art</option>
-          <option value="37">Neon</option>
-          <option value="43">Waterbender</option>
-          <option value="53">Painting</option>
-          <option value="14">Stained Glass</option>
-          <option value="19">Gothic</option>
-          <option value="21">Avatar</option>
-          <option value="79">Mystical</option>
-          <option value="69">Retro</option>
-          <option value="31">Chromatic</option>
-          <option value="51">Abstract Cityscape</option>
-          <option value="84">Sketch</option>
-          <option value="59">Anime V2</option>
-          <option value="68">Scatter</option>
-          <option value="66">Architecture</option>
-          <option value="60">Pixel Art</option>
-          <option value="61">Comic V2</option>
-          <option value="41">Haunted</option>
-          <option value="10">Macro Photography</option>
-          <option value="67">Glass Art</option>
-          <option value="73">Salvador Dali</option>
-          <option value="6">Cosmic</option>
-          <option value="18">Graffiti</option>
-          <option value="58">Knolling Case</option>
-          <option value="29">Pop Art II</option>
-          <option value="20">Rainbow</option>
-          <option value="72">Japanese Art</option>
-          <option value="35">Shamrock Fantasy</option>
-          <option value="13">Dystopian</option>
-          <option value="70">Poster Art</option>
-          <option value="26">Medieval</option>
-          <option value="77">Poly Art</option>
-          <option value="25">Euphoric</option>
-          <option value="50">Vibrant Viking</option>
-          <option value="42">Logo</option>
-          <option value="85">Comic Book</option>
-          <option value="36">Abstract Vibrant</option>
-          <option value="65">Landscape</option>
-          <option value="92">Cinematic Render</option>
-          <option value="45">Kawaii Chibi</option>
-          <option value="24">Claymation</option>
-          <option value="27">Origami</option>
-          <option value="30">Pattern</option>
-          <option value="64">Cyberpunk</option>
-          <option value="71">Ink</option>
-          <option value="47">Elven</option>
-          <option value="34">Amazonian</option>
-          <option value="76">Retrowave</option>
-          <option value="28">Pop Art</option>
-          <option value="38">Cubism</option>
-          <option value="54">Icon</option>
-          <option value="9">Disney</option>
-          <option value="75">Steampunk</option>
-          <option value="81">Futuristic</option>
-          <option value="46">Forestpunk</option>
-          <option value="23">Candyland</option>
-        </select>
+        <div class="dropdown">
+          <select id="artStyleSelection" name="art_style">
+            <option>Art Style</option>
+            <option value="63">Sticker</option>
+            <option value="89">Fantasy</option>
+            <option value="55">Render</option>
+            <option value="78">Vibrant</option>
+            <option value="91">Woolitize</option>
+            <option value="12">Studio Ghibli</option>
+            <option value="74">Van Gogh</option>
+            <option value="82">Polaroid</option>
+            <option value="40">Rococco</option>
+            <option value="56">Coloring Book</option>
+            <option value="48">Samurai</option>
+            <option value="8">Minecraft</option>
+            <option value="49">Aquatic</option>
+            <option value="44">Firebender</option>
+            <option value="33">Neo fauvism</option>
+            <option value="52">Illustration</option>
+            <option value="7">Marble</option>
+            <option value="57">PaperCut Style</option>
+            <option value="88">Rennaisance</option>
+            <option value="11">GTA</option>
+            <option value="15">Product Photography</option>
+            <option value="32">Clip Art</option>
+            <option value="37">Neon</option>
+            <option value="43">Waterbender</option>
+            <option value="53">Painting</option>
+            <option value="14">Stained Glass</option>
+            <option value="19">Gothic</option>
+            <option value="21">Avatar</option>
+            <option value="79">Mystical</option>
+            <option value="69">Retro</option>
+            <option value="31">Chromatic</option>
+            <option value="51">Abstract Cityscape</option>
+            <option value="84">Sketch</option>
+            <option value="59">Anime V2</option>
+            <option value="68">Scatter</option>
+            <option value="66">Architecture</option>
+            <option value="60">Pixel Art</option>
+            <option value="61">Comic V2</option>
+            <option value="41">Haunted</option>
+            <option value="10">Macro Photography</option>
+            <option value="67">Glass Art</option>
+            <option value="73">Salvador Dali</option>
+            <option value="6">Cosmic</option>
+            <option value="18">Graffiti</option>
+            <option value="58">Knolling Case</option>
+            <option value="29">Pop Art II</option>
+            <option value="20">Rainbow</option>
+            <option value="72">Japanese Art</option>
+            <option value="35">Shamrock Fantasy</option>
+            <option value="13">Dystopian</option>
+            <option value="70">Poster Art</option>
+            <option value="26">Medieval</option>
+            <option value="77">Poly Art</option>
+            <option value="25">Euphoric</option>
+            <option value="50">Vibrant Viking</option>
+            <option value="42">Logo</option>
+            <option value="85">Comic Book</option>
+            <option value="36">Abstract Vibrant</option>
+            <option value="65">Landscape</option>
+            <option value="92">Cinematic Render</option>
+            <option value="45">Kawaii Chibi</option>
+            <option value="24">Claymation</option>
+            <option value="27">Origami</option>
+            <option value="30">Pattern</option>
+            <option value="64">Cyberpunk</option>
+            <option value="71">Ink</option>
+            <option value="47">Elven</option>
+            <option value="34">Amazonian</option>
+            <option value="76">Retrowave</option>
+            <option value="28">Pop Art</option>
+            <option value="38">Cubism</option>
+            <option value="54">Icon</option>
+            <option value="9">Disney</option>
+            <option value="75">Steampunk</option>
+            <option value="81">Futuristic</option>
+            <option value="46">Forestpunk</option>
+            <option value="23">Candyland</option>
+          </select>
+        </div>
       </div>
-
-      
       <div class="prompt-input">
-        <label for="artPrompt">Art Prompt:</label>
-        <input
+        <input class="prompt"
           id="artPrompt"
           type="text"
           name="prompt"
           placeholder="Enter your prompt"
           required
         />
+
+        </textarea>
       </div>
-      <button type="submit">Submit</button>
+      <button class="form-submit-button" type="submit">Submit</button>
     </form>
   </main>
 </div>
+
+<div id="loadingIndicator" style="display: none;">
+  <div class="hypnotic"></div>
+  <p>Step 1: Generate your art</p>
+  <p>Step 2: If you're happy, click save and send your art to us</p>
+  <p>Step 3: Wait for the payment link to confirm your order</p>
+  <!-- You can add a spinner or any animation here -->
+</div>
+
+
+<script>
+  document.getElementById('artForm').onsubmit = function() {
+      document.getElementById('loadingIndicator').style.display = 'flex';
+  };
+</script>
+
 
 {% endblock content %}

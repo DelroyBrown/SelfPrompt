@@ -76,7 +76,7 @@ def home(request):
             "image_link": image_link,
             "art_prompt_id": art_prompt.id,
         }
-        return render(request, "image_choices_template.html", context)
+        return render(request, "generated_image.html", context)
     else:
         return HttpResponse("API request failed", status=response.status_code)
 
@@ -226,7 +226,7 @@ def save_image(request):
     image_io.seek(0)
 
     # Save the watermarked image in the ArtPrompt instance
-    art_prompt.watermarked_image.save(
+    art_prompt.watermarked_image.save( 
         f"watermarked_{art_prompt.generated_image.name}", ContentFile(image_io.read())
     )
 
@@ -266,4 +266,4 @@ def save_image(request):
         "art_style_name": art_style_name,
         "watermarked_image_url": watermarked_image_url,
     }
-    return render(request, "prompt_summary.html", context)
+    return render(request, "summary.html", context)

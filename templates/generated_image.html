@@ -1,0 +1,123 @@
+{% extends "base.html" %} {% block content %}
+
+<div class="gen-img_container">
+  {% if image_generated %}
+  <div class="gen-img_generated-image-wrap">
+    <div class="imageHolder" oncontextmenu="return false;">
+      <img
+        src="{{ image_link }}"
+        alt="Generated Art"
+        style="max-width: 100%; height: auto"
+      />
+    </div>
+  </div>
+
+  <div class="gen-img_form">
+    <h1>Choose framing option:</h1>
+    <p>
+      If you're happy with your picture, choose your framing options, framed or
+      unframed, the size and the color and send it off to us. A watermarked
+      image will be available for you to download.
+    </p>
+    <form action="{% url 'save_image' %}" method="post">
+      {% csrf_token %}
+      <input type="hidden" name="art_prompt_id" value="{{ art_prompt_id }}" />
+
+      <div class="gen-img_frame">
+        <span>
+          <input
+            type="radio"
+            id="unframed"
+            name="frame_option"
+            value="unframed"
+          />
+          <label for="unframed">Unframed</label>
+        </span>
+        <span>
+          <input
+            type="radio"
+            id="framed"
+            name="frame_option"
+            value="framed"
+            checked
+          />
+          <label for="framed">Framed</label><br />
+        </span>
+      </div>
+
+      <div class="gen-img_image_size">
+        <h4>Choose image/frame size:</h4>
+        <span>
+          <input type="radio" id="30x30" name="frame_size" value="30x30" />
+          <label for="30x30">30x30 cm</label>
+        </span>
+        <span>
+          <input type="radio" id="50x50" name="frame_size" value="50x50" />
+          <label for="50x50">50x50 cm</label>
+        </span>
+        <span>
+          <input type="radio" id="70x70" name="frame_size" value="70x70" />
+          <label for="70x70">70x70 cm</label>
+        </span>
+      </div>
+
+      <div id="frameColors" class="gen-img_frame-color">
+        <h4>Choose frame color:</h4>
+        <span>
+          <input type="radio" id="black" name="frame_color" value="black" />
+          <label for="black">Black</label>
+        </span>
+        <span>
+          <input type="radio" id="white" name="frame_color" value="white" />
+          <label for="white">White</label>
+        </span>
+      </div>
+
+      <div class="gen-img_buttons">
+        <span>
+          <small>Click here to send your image off to us for printing</small>
+          <button type="submit">Save this Image</button>
+        </span>
+        <span>
+          <small>Click here to get another version of the image</small>
+          <button id="newImage" type="button">Try Another</button>
+        </span>
+      </div>
+    </form>
+  </div>
+
+  {% endif %}
+</div>
+<a href="{% url 'render_form' %}">Try Again</a>
+
+<div id="loadingIndicator" style="display: none">
+  <div class="hypnotic"></div>
+  <p>Generating you a new image...</p>
+  <!-- You can add a spinner or any animation here -->
+</div>
+
+<script>
+  document.addEventListener("contextmenu", function (event) {
+    if (event.target.tagName === "IMG") {
+      event.preventDefault();
+    }
+  });
+
+  document.getElementById("newImage").onclick = function () {
+    window.location.reload();
+    document.getElementById("loadingIndicator").style.display = "flex";
+  };
+
+  document.getElementById("unframed").onclick = function () {
+    document.getElementById("frameColors").style.display =
+      "none";
+  };
+  document.getElementById("framed").onclick = function () {
+    document.getElementById("frameColors").style.display =
+      "flex";
+  };
+
+  
+</script>
+
+{% endblock content %}
