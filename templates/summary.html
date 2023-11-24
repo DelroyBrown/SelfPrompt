@@ -1,20 +1,29 @@
 {% extends "base.html" %} {% load static %} {% block content %}
 
 <header class="summary_header">
-  <img
+  <a href="{% url 'render_form' %}">
+    <img
     src="{% static 'images/prmptai_artgenerator.png' %}"
-    alt="PromptAi Digital Art Posters Art Generator"
-  />
-
-  <div>
-    <h2>Prompt Summary</h2>
-    <p>
-      Your name is {{ art_prompt.full_name }}, your email is
-      {{ art_prompt.email }}. Your prompt <em>"{{art_prompt.prompt}}"</em>, using the style
-      {{art_style_name}}, will be {{art_prompt.frame_option}} in {{art_prompt.frame_color}}.
-    </p>
-  </div>
+    alt="PromptAi Digital Art Posters Art Generator"/>
+  </a>
 </header>
+
+  <div class="summary_prompt-summary">
+    {% if art_prompt.frame_option == 'framed' %}
+    <p>
+      Your name is <span>{{ art_prompt.full_name }}</span>, your email is <span>{{ art_prompt.email}}</span>.
+      Your prompt <em>"<span>{{art_prompt.prompt}}</span>"</em>, using the style
+      <span>{{art_style_name}}</span>, will be <span>{{art_prompt.frame_option}}</span> in
+      <span>{{art_prompt.frame_color}}</span> at the size <span>{{art_prompt.frame_size}}</span>.
+    </p>
+    {% else %}
+    <p>
+      Your name is <span>{{ art_prompt.full_name }}</span>, your email is <span>{{ art_prompt.email}}</span>.
+      Your prompt <em>"<span>{{art_prompt.prompt}}</span>"</em>, using the style
+      <span>{{art_style_name}}</span>, will be <span>{{art_prompt.frame_option}}</span> and printed at the size <span>{{art_prompt.frame_size}}</span>.
+    </p>
+    {% endif %}
+  </div>
 <!-- <p><strong>Full Name:</strong> {{ art_prompt.full_name }}</p>
 <p><strong>Email:</strong> {{ art_prompt.email }}</p>
 <p><strong>Prompt Text:</strong> {{ art_prompt.prompt }}</p>
@@ -23,12 +32,14 @@
 <p><strong>Frame Colour:</strong> {{ art_prompt.frame_color }}</p>
 <p><strong>Frame Size:</strong> {{ art_prompt.frame_size }}</p> -->
 <!-- Include other details as needed -->
-<a href="{{ watermarked_image_url }}" download="WatermarkedImage.png"
-  >Download Watermarked Image</a
->
+<div class="summary_button-wrap">
+  <a class="summary_download-img-btn"
+  href="{{ watermarked_image_url }}"
+  download="WatermarkedImage.png">Download Watermarked Image</a>
 
 <p>
   Your image has been sent off to be framed and will be with you shortly.
   PromptAi will be in touch with a payment link and delivery time.
 </p>
+</div>
 {% endblock %}
